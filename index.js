@@ -7,7 +7,7 @@ app.get('/', (req,res) =>{
     res.send("HELLO WORLD")
 })
 
-let server = app.listen('8000', () => {
+let server = app.listen(process.env.PORT, () => {
     console.log("App on")
 })
 let io = socket(server, {
