@@ -1,13 +1,16 @@
 const express = require('express')
 const app = express()
 const socket = require('socket.io')
+const randomWords = require('random-words');
 const cors = require('cors')
 app.use(cors())
 app.get('/', (req,res) =>{
     res.send("HELLO WORLD")
 })
-
-let server = app.listen(process.env.PORT, () => {
+app.get('/get/word', (req,res)=>{
+    res.send(randomWords())
+})
+let server = app.listen(process.env.PORT || 8000, () => {
     console.log("App on")
 })
 let io = socket(server, {
@@ -37,7 +40,7 @@ io.on('connection', (socket)=>{
         }
     })
     socket.on('refresh-userList', (data)=>{
-        console.log('data')
+        console.log('data from', data)
         userList = data
     })
 })
